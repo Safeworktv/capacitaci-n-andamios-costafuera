@@ -1,36 +1,21 @@
-// --- VARIABLES DE ESTADO ---
-let vientoActual = 25; // Simulación inicial de viento en km/hr
-let etapaActual = "inicio";
-
-// --- CONTROL DE PANTALLAS ---
+let vientoActual = 20;
 
 function iniciarJuego() {
     document.getElementById('pantalla-inicio').style.display = 'none';
     document.getElementById('zona-inspeccion').style.display = 'block';
-    
-    // Simular un cambio de viento aleatorio para cada sesión
-    vientoActual = Math.floor(Math.random() * (55 - 10 + 1)) + 10;
+    vientoActual = Math.floor(Math.random() * 50) + 5;
     actualizarClima();
 }
 
 function mostrarGlosario() {
-    alert("Módulo de Reconocimiento: \n1. Poste (Estándar)\n2. Larguero\n3. Charola con Seguro\n4. Base Niveladora\n5. Rodapié\n\nPróximamente: Galería interactiva de piezas.");
+    alert("ELEMENTOS CLAVE:\n1. Husillo (Nivelación)\n2. Cruceta (Diagonal)\n3. Charola (Seguro Inferior)\n4. Rodapié (Protección caída objetos)");
 }
-
-// --- LÓGICA DEL CLIMA (Basado en B31) ---
 
 function actualizarClima() {
-    const indicadorViento = document.getElementById('clima-viento');
-    if (vientoActual > 45) {
-        indicadorViento.innerHTML = `🛑 Viento: ${vientoActual} km/hr (¡PELIGRO!)`;
-        indicadorViento.style.color = "red";
-    } else {
-        indicadorViento.innerHTML = `💨 Viento: ${vientoActual} km/hr (Seguro)`;
-        indicadorViento.style.color = "green";
-    }
+    const el = document.getElementById('clima-viento');
+    el.innerHTML = vientoActual > 45 ? `🛑 Viento: ${vientoActual} km/hr (¡SUSPENDER!)` : `💨 Viento: ${vientoActual} km/hr (Seguro)`;
+    el.style.color = vientoActual > 45 ? "red" : "green";
 }
-
-// --- CONTROL DEL MODAL (CHECKLIST B31) ---
 
 function abrirChecklist() {
     document.getElementById('modal-checklist').style.display = 'block';
@@ -40,59 +25,44 @@ function cerrarChecklist() {
     document.getElementById('modal-checklist').style.display = 'none';
 }
 
-// --- VALIDACIÓN FINAL Y AUTORIZACIÓN ---
-
 function validarYFinalizar() {
-    // 1. Verificar todos los checkboxes de la B31
-    const checks = [
-        document.getElementById('c1').checked,
-        document.getElementById('c2').checked,
-        document.getElementById('c3').checked,
-        document.getElementById('c4').checked,
-        document.getElementById('c5').checked,
-        document.getElementById('c6').checked
-    ];
+    // 1. Validar Checkboxes
+    const ids = ['c1','c2','c3','c4','c5','c6'];
+    for(let id of ids) {
+        if(!document.getElementById(id).checked) {
+            alert("🛑 HALLAZGO: Debe verificar todos los puntos técnicos del andamio.");
+            return;
+        }
+    }
 
+    // 2. Validar Datos de la Tarjeta (Llenado correcto)
+    const ubicacion = document.getElementById('t-ubicacion').value.trim();
+    const folio = document.getElementById('t-folio').value.trim();
+    const fecha = document.getElementById('t-fecha').value;
     const firma = document.getElementById('firma-nombre').value.trim();
 
-    // 2. Lógica de validación cruzada
-    const todosMarcados = checks.every(item => item === true);
-
-    if (!todosMarcados) {
-        alert("🛑 ERROR SSPA: No puede autorizar el andamio. Debe verificar y marcar todos los puntos de la Lista B31.");
+    if(ubicacion === "" || folio === "" || fecha === "") {
+        alert("⚠️ ERROR DE LLENADO: Complete la Ubicación, Folio y Fecha en el formulario de la tarjeta.");
         return;
     }
 
-    if (vientoActual > 45) {
-        alert(`🛑 ACCIÓN PROHIBIDA: Según la B31, no se pueden realizar trabajos si el viento excede los 45 km/hr. (Viento actual: ${vientoActual} km/hr)`);
+    if(vientoActual > 45) {
+        alert("🛑 CONDICIÓN INSEGURA: Viento mayor a 45 km/hr. No se autoriza el uso.");
         return;
     }
 
-    if (firma === "") {
-        alert("⚠️ FALTA FIRMA: Debe ingresar el nombre del Supervisor del Trabajo para validar el permiso.");
+    if(firma === "") {
+        alert("⚠️ FIRMA: Ingrese su nombre para autorizar la Tarjeta Verde.");
         return;
     }
 
-    // 3. Éxito de la inspección
-    confirmarAutorizacion(firma);
-}
-
-function confirmarAutorizacion(nombre) {
-    alert(`✅ ¡AUTORIZACIÓN EXITOSA!\n\nSupervisor: ${nombre}\nEl andamio cumple con la normativa B31.\n\nLa Tarjeta Verde ha sido colocada. El personal puede iniciar actividades.`);
+    // 3. Resultado Final
+    alert(`✅ EXCELENTE\n\nAndamio en ${ubicacion} con Permiso ${folio} ha sido autorizado por ${firma}.`);
     
-    // Cambiar visualmente el slot de etiqueta (simulación)
+    // Cambiar visualmente el slot a la Tarjeta Verde que subiste
     const slot = document.getElementById('slot-etiqueta');
-    slot.innerHTML = `<img src="assets/etiqueta_verde.jpg" style="width:100%; height:100%; border-radius:5px;">`;
-    slot.style.borderColor = "#007336";
+    slot.innerHTML = `<img src="assets/etiqueta_verde.jpg" style="width:100%; height:100%; border-radius:5px; object-fit:cover;">`;
+    slot.style.border = "2px solid #007336";
     
     cerrarChecklist();
-}
-
-// --- CIERRE DE SEGURIDAD ---
-// Cerrar modal si se hace clic fuera de él
-window.onclick = function(event) {
-    let modal = document.getElementById('modal-checklist');
-    if (event.target == modal) {
-        cerrarChecklist();
-    }
 }
