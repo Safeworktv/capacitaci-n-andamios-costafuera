@@ -1,1 +1,1 @@
-# capacitaci-n-andamios-costafuera
+# capacitacion-andamios-costafuera
