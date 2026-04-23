@@ -1,242 +1,45 @@
-/* --- CONFIGURACIÓN GENERAL --- */
 :root {
     --verde-pemex: #007336;
     --rojo-pemex: #ee2d24;
-    --gris-fondo: #f4f4f4;
     --blanco: #ffffff;
     --oscuro: #333333;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--gris-fondo);
-    color: var(--oscuro);
-}
+body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f0f0f0; }
 
-/* --- ENCABEZADO INSTITUCIONAL --- */
-header {
-    background-color: var(--verde-pemex);
-    color: var(--blanco);
-    padding: 20px;
-    text-align: center;
-    border-bottom: 6px solid var(--rojo-pemex);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+header { background: var(--verde-pemex); color: white; padding: 15px; text-align: center; border-bottom: 5px solid var(--rojo-pemex); }
+#logo-pemex { height: 60px; }
 
-#logo-pemex {
-    height: 70px;
-    margin-bottom: 10px;
-}
+#game-container { max-width: 950px; margin: 10px auto; padding: 20px; padding-bottom: 80px; }
 
-header h1 {
-    margin: 5px 0;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-}
+.welcome-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-/* --- CONTENEDOR PRINCIPAL --- */
-#game-container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    padding-bottom: 80px; /* Espacio para el footer */
-}
+.menu-buttons button { display: block; width: 100%; max-width: 300px; margin: 10px auto; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn-info { background: #005a8d; color: white; }
+.btn-play { background: var(--verde-pemex); color: white; }
 
-/* --- TARJETA DE BIENVENIDA --- */
-.welcome-card {
-    background-color: var(--blanco);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+.status-bar { background: #e0e0e0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; }
 
-.menu-buttons button {
-    display: block;
-    width: 100%;
-    max-width: 350px;
-    margin: 15px auto;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-}
+.canvas-simulacion { background: #2c3e50; height: 250px; border-radius: 8px; margin-bottom: 15px; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; color: white; }
 
-.btn-info { background-color: #005a8d; color: white; }
-.btn-play { background-color: var(--verde-pemex); color: white; }
+.etiquetas-layout { display: flex; gap: 20px; align-items: flex-start; justify-content: center; margin-bottom: 20px; }
 
-.menu-buttons button:hover {
-    transform: scale(1.02);
-    filter: brightness(1.1);
-}
+.formulario-tarjeta { background: #fff9c4; padding: 15px; border-radius: 8px; border: 1px solid #d4d4d4; text-align: left; width: 250px; }
+.formulario-tarjeta input { width: 90%; margin-bottom: 10px; padding: 5px; }
+.nota { font-size: 0.7rem; color: #666; font-style: italic; }
 
-/* --- ZONA DE SIMULACIÓN Y ETIQUETAS --- */
-.status-bar {
-    background-color: #e0e0e0;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
+.drop-zone { width: 140px; height: 180px; border: 2px dashed #444; background: white; display: flex; align-items: center; justify-content: center; border-radius: 5px; }
 
-.canvas-simulacion {
-    background-color: #2c3e50;
-    height: 300px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #95a5a6;
-    border: 3px dashed #7f8c8d;
-    margin-bottom: 20px;
-}
+.etiquetas-disponibles { display: flex; justify-content: center; gap: 30px; margin: 15px 0; }
+.etiqueta-box { text-align: center; font-size: 0.8rem; font-weight: bold; }
+.draggable { width: 80px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
-.etiquetas-disponibles {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
+.btn-check { background: #f39c12; color: white; padding: 15px 40px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
-.etiqueta-box {
-    text-align: center;
-    width: 140px;
-}
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+.modal-content { background: white; margin: 2% auto; padding: 20px; width: 90%; max-width: 500px; border-radius: 10px; border-top: 8px solid var(--verde-pemex); }
+.check-item { background: #f4f4f4; padding: 8px; margin: 5px 0; border-radius: 4px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+.signature-area { background: #eee; padding: 15px; margin-top: 15px; border-radius: 5px; }
+.btn-autorizar { background: var(--verde-pemex); color: white; width: 100%; padding: 12px; border: none; border-radius: 6px; margin-top: 15px; font-weight: bold; cursor: pointer; }
 
-.draggable {
-    width: 100px;
-    height: auto;
-    cursor: grab;
-    border: 2px solid transparent;
-    border-radius: 5px;
-}
-
-.drop-zone {
-    width: 150px;
-    height: 200px;
-    border: 3px dashed var(--oscuro);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-
-.btn-check {
-    background-color: #f39c12;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-/* --- VENTANA MODAL (CHECKLIST B31) --- */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    overflow-y: auto;
-}
-
-.modal-content {
-    background-color: var(--blanco);
-    margin: 2% auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 550px;
-    border-radius: 15px;
-    border-top: 10px solid var(--verde-pemex);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-subtitle {
-    color: #666;
-    font-size: 0.9rem;
-    margin-top: -10px;
-}
-
-.close-btn {
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.check-item {
-    background-color: #f9f9f9;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.check-item input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.signature-area {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #fff9c4;
-    border-radius: 5px;
-}
-
-.signature-area input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-.btn-autorizar {
-    background-color: var(--verde-pemex);
-    color: white;
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-/* --- PIE DE PÁGINA --- */
-footer {
-    background-color: var(--oscuro);
-    color: var(--blanco);
-    text-align: center;
-    padding: 15px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.8rem;
-}
-
-/* --- RESPONSIVO --- */
-@media (max-width: 600px) {
-    header h1 { font-size: 1.1rem; }
-    .modal-content { width: 95%; margin: 10% auto; }
-}
+footer { background: #333; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; font-size: 0.7rem; }
