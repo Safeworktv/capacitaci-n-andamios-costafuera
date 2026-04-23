@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+header {
+    background-color: #007336; /* Verde Pemex */
+    color: white;
+    padding: 20px;
+    border-bottom: 5px solid #ee2d24; /* Rojo Pemex */
+}
+
+#logo-pemex {
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.menu-buttons button {
+    display: block;
+    width: 250px;
+    margin: 15px auto;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.menu-buttons button:hover {
+    background-color: #005628;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+}
