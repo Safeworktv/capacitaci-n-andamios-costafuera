@@ -19,7 +19,7 @@
         <div id="pantalla-inicio">
             <div class="welcome-card">
                 <h2>Módulo de Capacitación Técnica</h2>
-                <p>Bienvenido, Erik Duran. Seleccione una etapa para continuar:</p>
+                <p>Identificación de componentes y protocolo de etiquetado.</p>
                 <div class="menu-buttons">
                     <button class="btn-info" onclick="mostrarGlosario()">1. RECONOCIMIENTO DE PIEZAS</button>
                     <button class="btn-play" onclick="iniciarJuego()">2. INICIAR SIMULACIÓN DE ARMADO</button>
@@ -29,84 +29,76 @@
 
         <div id="zona-inspeccion" style="display:none;">
             <div class="status-bar">
-                <span>📍 Ubicación: Subnivel de Instalación Costafuera</span>
-                <span id="clima-viento">💨 Viento: 25 km/hr (Seguro)</span>
+                <span>📍 Ubicación: Instalación Costafuera</span>
+                <span id="clima-viento">💨 Viento: Calculando...</span>
             </div>
 
             <div class="canvas-simulacion">
                 <div id="andamio-visual">
-                    <p>[ Espacio de Interacción: Identifique Seguros y Nivelación ]</p>
+                    <p>[ Visualización del Andamio ]</p>
                 </div>
             </div>
 
             <div class="controles-etiquetas">
-                <h3>Gestión de Tarjetas de Seguridad</h3>
-                <div class="drop-zone-container">
-                    <div id="slot-etiqueta" class="drop-zone">
-                        <p>Coloque la Tarjeta aquí</p>
+                <h3>Control de Etiquetado</h3>
+                <div class="etiquetas-layout">
+                    <div class="drop-zone-container">
+                        <div id="slot-etiqueta" class="drop-zone">
+                            <p>Área de Colocación</p>
+                        </div>
+                    </div>
+                    
+                    <div class="formulario-tarjeta">
+                        <h4>Datos para Tarjeta Verde</h4>
+                        <input type="text" id="t-ubicacion" placeholder="Ubicación (Ej. Subnivel 1)">
+                        <input type="text" id="t-folio" placeholder="No. Permiso de Trabajo">
+                        <input type="date" id="t-fecha">
+                        <p class="nota">* Todos los campos son obligatorios según el estándar.</p>
                     </div>
                 </div>
+
                 <div class="etiquetas-disponibles">
                     <div class="etiqueta-box">
                         <img src="assets/etiqueta_roja.jpg" id="roja" class="draggable" alt="Tarjeta Roja">
-                        <span>ROJA: En Armado / Inseguro</span>
+                        <span>ROJA: En Armado</span>
                     </div>
                     <div class="etiqueta-box">
                         <img src="assets/etiqueta_verde.jpg" id="verde" class="draggable" alt="Tarjeta Verde">
-                        <span>VERDE: Andamio Seguro</span>
+                        <span>VERDE: Autorizado</span>
                     </div>
                 </div>
-                <button class="btn-check" onclick="abrirChecklist()">FINALIZAR INSPECCIÓN (B31)</button>
+                <button class="btn-check" onclick="abrirChecklist()">REALIZAR INSPECCIÓN TÉCNICA</button>
             </div>
         </div>
 
         <div id="modal-checklist" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>📋 LISTA DE VERIFICACIÓN B31</h3>
+                    <h3>📋 PROTOCOLO DE VERIFICACIÓN</h3>
                     <button class="close-btn" onclick="cerrarChecklist()">&times;</button>
                 </div>
-                <p class="modal-subtitle">Montaje de Andamiaje en Instalaciones de Producción</p>
                 <hr>
-                <form id="form-b31">
-                    <div class="check-item">
-                        <input type="checkbox" id="c1"> 
-                        <label for="c1">¿Personal usa cable de seguridad a 2 puntos de anclaje?</label>
+                <form id="form-inspeccion">
+                    <div class="check-group">
+                        <div class="check-item"><input type="checkbox" id="c1"> <label>Nivelación sobre parrilla.</label></div>
+                        <div class="check-item"><input type="checkbox" id="c2"> <label>Diagonales instaladas.</label></div>
+                        <div class="check-item"><input type="checkbox" id="c3"> <label>Seguros de charolas activos.</label></div>
+                        <div class="check-item"><input type="checkbox" id="c4"> <label>Rodapiés y barandales completos.</label></div>
+                        <div class="check-item"><input type="checkbox" id="c5"> <label>Escalera interna libre.</label></div>
+                        <div class="check-item"><input type="checkbox" id="c6"> <label>Sin apoyo en tuberías de proceso.</label></div>
                     </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="c2"> 
-                        <label for="c2">¿Se bajó el equipo a mano? (Prohibido lanzarlo)</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="c3"> 
-                        <label for="c3">¿Rutas de escape y accesos están libres de obstrucciones?</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="c4"> 
-                        <label for="c4">¿Se evitó el apoyo en equipos de proceso o tuberías?</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="c5"> 
-                        <label for="c5">¿La velocidad del viento es menor a 45 km/hr?</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="c6"> 
-                        <label for="c6">¿Se verificó el cierre de seguros inferiores en charolas?</label>
-                    </div>
-                    
                     <div class="signature-area">
-                        <label>Firma del Supervisor del Trabajo:</label>
-                        <input type="text" placeholder="Escriba su nombre completo" id="firma-nombre">
+                        <label>Nombre del Supervisor (Firma):</label>
+                        <input type="text" id="firma-nombre">
                     </div>
-
-                    <button type="button" class="btn-autorizar" onclick="validarYFinalizar()">AUTORIZAR Y COLOCAR ETIQUETA VERDE</button>
+                    <button type="button" class="btn-autorizar" onclick="validarYFinalizar()">AUTORIZAR Y COLOCAR TARJETA</button>
                 </form>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 PEMEX - Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+        <p>&copy; 2026 PEMEX - SSPA</p>
     </footer>
 
     <script src="script.js"></script>
