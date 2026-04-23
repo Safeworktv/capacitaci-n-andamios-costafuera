@@ -12,32 +12,101 @@
             <img src="assets/logo_pemex.png" alt="PEMEX" id="logo-pemex">
         </div>
         <h1>SIMULADOR DE ARMADO SEGURO DE ANDAMIOS</h1>
+        <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
     </header>
 
     <main id="game-container">
         <div id="pantalla-inicio">
-            <h2>Bienvenido al Módulo de Capacitación</h2>
-            <p>Seleccione una opción para comenzar:</p>
-            <div class="menu-buttons">
-                <button onclick="mostrarGlosario()">RECONOCIMIENTO DE PIEZAS</button>
-                <button onclick="iniciarJuego()">INICIAR SIMULACIÓN DE ARMADO</button>
+            <div class="welcome-card">
+                <h2>Módulo de Capacitación Técnica</h2>
+                <p>Bienvenido, Erik Duran. Seleccione una etapa para continuar:</p>
+                <div class="menu-buttons">
+                    <button class="btn-info" onclick="mostrarGlosario()">1. RECONOCIMIENTO DE PIEZAS</button>
+                    <button class="btn-play" onclick="iniciarJuego()">2. INICIAR SIMULACIÓN DE ARMADO</button>
+                </div>
             </div>
         </div>
 
         <div id="zona-inspeccion" style="display:none;">
-            <h3>Estado de Inspección del Andamio</h3>
-            <div id="slot-etiqueta" class="drop-zone">
-                <p>Arrastre la etiqueta correspondiente aquí</p>
+            <div class="status-bar">
+                <span>📍 Ubicación: Subnivel de Instalación Costafuera</span>
+                <span id="clima-viento">💨 Viento: 25 km/hr (Seguro)</span>
             </div>
-            <div class="etiquetas-disponibles">
-                <img src="assets/etiqueta_roja.jpg" id="roja" class="draggable" alt="Etiqueta Roja">
-                <img src="assets/etiqueta_verde.jpg" id="verde" class="draggable" alt="Etiqueta Verde">
+
+            <div class="canvas-simulacion">
+                <div id="andamio-visual">
+                    <p>[ Espacio de Interacción: Identifique Seguros y Nivelación ]</p>
+                </div>
+            </div>
+
+            <div class="controles-etiquetas">
+                <h3>Gestión de Tarjetas de Seguridad</h3>
+                <div class="drop-zone-container">
+                    <div id="slot-etiqueta" class="drop-zone">
+                        <p>Coloque la Tarjeta aquí</p>
+                    </div>
+                </div>
+                <div class="etiquetas-disponibles">
+                    <div class="etiqueta-box">
+                        <img src="assets/etiqueta_roja.jpg" id="roja" class="draggable" alt="Tarjeta Roja">
+                        <span>ROJA: En Armado / Inseguro</span>
+                    </div>
+                    <div class="etiqueta-box">
+                        <img src="assets/etiqueta_verde.jpg" id="verde" class="draggable" alt="Tarjeta Verde">
+                        <span>VERDE: Andamio Seguro</span>
+                    </div>
+                </div>
+                <button class="btn-check" onclick="abrirChecklist()">FINALIZAR INSPECCIÓN (B31)</button>
+            </div>
+        </div>
+
+        <div id="modal-checklist" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📋 LISTA DE VERIFICACIÓN B31</h3>
+                    <button class="close-btn" onclick="cerrarChecklist()">&times;</button>
+                </div>
+                <p class="modal-subtitle">Montaje de Andamiaje en Instalaciones de Producción</p>
+                <hr>
+                <form id="form-b31">
+                    <div class="check-item">
+                        <input type="checkbox" id="c1"> 
+                        <label for="c1">¿Personal usa cable de seguridad a 2 puntos de anclaje?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="c2"> 
+                        <label for="c2">¿Se bajó el equipo a mano? (Prohibido lanzarlo)</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="c3"> 
+                        <label for="c3">¿Rutas de escape y accesos están libres de obstrucciones?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="c4"> 
+                        <label for="c4">¿Se evitó el apoyo en equipos de proceso o tuberías?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="c5"> 
+                        <label for="c5">¿La velocidad del viento es menor a 45 km/hr?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="c6"> 
+                        <label for="c6">¿Se verificó el cierre de seguros inferiores en charolas?</label>
+                    </div>
+                    
+                    <div class="signature-area">
+                        <label>Firma del Supervisor del Trabajo:</label>
+                        <input type="text" placeholder="Escriba su nombre completo" id="firma-nombre">
+                    </div>
+
+                    <button type="button" class="btn-autorizar" onclick="validarYFinalizar()">AUTORIZAR Y COLOCAR ETIQUETA VERDE</button>
+                </form>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+        <p>&copy; 2026 PEMEX - Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
     </footer>
 
     <script src="script.js"></script>
