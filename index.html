@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Andamiaje Seguro | PEMEX SSPA</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -32,7 +32,7 @@
                     <div class="icon-circle">⬛</div>
                     <div class="pieza-info"><strong>Plataforma</strong><span>Charola de Trabajo</span></div>
                 </div>
-                <p class="hint">Arrastre los elementos al área de montaje para comenzar.</p>
+                <p class="hint">Arrastre los elementos al área oscura para comenzar el montaje.</p>
             </aside>
 
             <section id="area-construccion" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -40,7 +40,6 @@
                     <div class="stat-badge" id="viento-badge">💨 Viento: -- km/hr</div>
                     <div class="stat-badge" id="etiqueta-status">Estado: En Armado</div>
                 </div>
-                
                 <div id="andamio-visual">
                     <div id="tarjeta-placeholder"></div>
                 </div>
@@ -49,36 +48,33 @@
 
         <footer id="control-panel">
             <div class="input-group">
-                <input type="text" id="t-ubicacion" placeholder="Ubicación de la Instalación">
+                <input type="text" id="t-ubicacion" placeholder="Ubicación">
                 <input type="text" id="t-folio" placeholder="Folio del Permiso">
             </div>
-            <button class="btn-main" id="btn-inspeccion" onclick="abrirChecklist()" disabled>Iniciar Protocolo de Inspección</button>
+            <button class="btn-main" id="btn-inspeccion" onclick="abrirChecklist()" disabled>Iniciar Inspección Técnica</button>
         </footer>
 
         <div id="modal-checklist" class="modal">
             <div class="modal-card">
                 <header class="modal-header">
                     <h3>Protocolo de Verificación SSPA</h3>
-                    <button class="close-x" onclick="cerrarChecklist()">&times;</button>
                 </header>
                 <div class="modal-body">
                     <div class="check-list">
-                        <label class="custom-check"><input type="checkbox" id="c1"> <span>Nivelación y plomeo sobre parrilla</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c2"> <span>Diagonales y crucetas instaladas</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c1"> <span>Nivelación y plomeo [cite: 23]</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c2"> <span>Diagonales instaladas</span></label>
                         <label class="custom-check"><input type="checkbox" id="c3"> <span>Seguros de charolas activos</span></label>
                         <label class="custom-check"><input type="checkbox" id="c4"> <span>Rodapiés y barandales completos</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c5"> <span>Sin apoyo en líneas de proceso</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c5"> <span>Sin apoyo en líneas de proceso [cite: 38]</span></label>
                     </div>
                     <div class="signature-box">
-                        <label>Firma Electrónica del Supervisor:</label>
-                        <input type="text" id="firma-nombre" placeholder="Nombre completo">
+                        <input type="text" id="firma-nombre" placeholder="Nombre del Supervisor [cite: 37]">
                     </div>
                     <button class="btn-confirm" onclick="validarYFinalizar()">Autorizar Tarjeta Verde</button>
                 </div>
             </div>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
