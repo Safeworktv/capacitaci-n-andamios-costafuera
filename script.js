@@ -1,68 +1,63 @@
-let vientoActual = 20;
+let armado = { base: false, marco: false, plataforma: false };
+let vientoVal = Math.floor(Math.random() * 55) + 5;
 
-function iniciarJuego() {
-    document.getElementById('pantalla-inicio').style.display = 'none';
-    document.getElementById('zona-inspeccion').style.display = 'block';
-    vientoActual = Math.floor(Math.random() * 50) + 5;
-    actualizarClima();
+// Inicialización
+const vientoBadge = document.getElementById('viento-badge');
+vientoBadge.innerText = `💨 Viento: ${vientoVal} km/hr`;
+if(vientoVal > 45) {
+    vientoBadge.style.background = "#fee2e2";
+    vientoBadge.style.color = "#ef4444";
 }
 
-function mostrarGlosario() {
-    alert("ELEMENTOS CLAVE:\n1. Husillo (Nivelación)\n2. Cruceta (Diagonal)\n3. Charola (Seguro Inferior)\n4. Rodapié (Protección caída objetos)");
+function allowDrop(ev) { ev.preventDefault(); }
+function drag(ev) { ev.dataTransfer.setData("pieza", ev.target.dataset.pieza); }
+
+function drop(ev) {
+    ev.preventDefault();
+    let tipo = ev.dataTransfer.getData("pieza");
+    
+    if (tipo === 'base' && !armado.base) {
+        crearPieza('tipo-base', 'Nivelación OK');
+        armado.base = true;
+    } else if (tipo === 'marco' && armado.base && !armado.marco) {
+        crearPieza('tipo-marco', 'Estructura OK');
+        armado.marco = true;
+    } else if (tipo === 'plataforma' && armado.marco && !armado.plataforma) {
+        crearPieza('tipo-plataforma', 'Superficie OK');
+        armado.plataforma = true;
+        document.getElementById('btn-inspeccion').disabled = false;
+        document.getElementById('tarjeta-placeholder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="80" style="border-radius:8px; box-shadow:0 10px 15px rgba(0,0,0,0.3)">`;
+    } else {
+        alert("Sigue la secuencia lógica de seguridad: Husillo > Marco > Plataforma");
+    }
 }
 
-function actualizarClima() {
-    const el = document.getElementById('clima-viento');
-    el.innerHTML = vientoActual > 45 ? `🛑 Viento: ${vientoActual} km/hr (¡SUSPENDER!)` : `💨 Viento: ${vientoActual} km/hr (Seguro)`;
-    el.style.color = vientoActual > 45 ? "red" : "green";
+function crearPieza(clase, label) {
+    const contenedor = document.getElementById('andamio-visual');
+    const div = document.createElement('div');
+    div.className = `andamio-pieza ${clase}`;
+    div.innerHTML = `<span>${label}</span>`;
+    contenedor.appendChild(div);
 }
 
-function abrirChecklist() {
-    document.getElementById('modal-checklist').style.display = 'block';
-}
-
-function cerrarChecklist() {
-    document.getElementById('modal-checklist').style.display = 'none';
-}
+function abrirChecklist() { document.getElementById('modal-checklist').style.display = 'block'; }
+function cerrarChecklist() { document.getElementById('modal-checklist').style.display = 'none'; }
 
 function validarYFinalizar() {
-    // 1. Validar Checkboxes
-    const ids = ['c1','c2','c3','c4','c5','c6'];
-    for(let id of ids) {
+    const checks = ['c1','c2','c3','c4','c5'];
+    for(let id of checks) {
         if(!document.getElementById(id).checked) {
-            alert("🛑 HALLAZGO: Debe verificar todos los puntos técnicos del andamio.");
-            return;
+            alert("🛑 Hallazgo Técnico detectado. Corrige antes de autorizar."); return;
         }
     }
-
-    // 2. Validar Datos de la Tarjeta (Llenado correcto)
-    const ubicacion = document.getElementById('t-ubicacion').value.trim();
-    const folio = document.getElementById('t-folio').value.trim();
-    const fecha = document.getElementById('t-fecha').value;
     const firma = document.getElementById('firma-nombre').value.trim();
+    if(!firma) { alert("La firma es obligatoria."); return; }
+    if(vientoVal > 45) { alert("🛑 Suspendido por ráfagas de viento."); return; }
 
-    if(ubicacion === "" || folio === "" || fecha === "") {
-        alert("⚠️ ERROR DE LLENADO: Complete la Ubicación, Folio y Fecha en el formulario de la tarjeta.");
-        return;
-    }
-
-    if(vientoActual > 45) {
-        alert("🛑 CONDICIÓN INSEGURA: Viento mayor a 45 km/hr. No se autoriza el uso.");
-        return;
-    }
-
-    if(firma === "") {
-        alert("⚠️ FIRMA: Ingrese su nombre para autorizar la Tarjeta Verde.");
-        return;
-    }
-
-    // 3. Resultado Final
-    alert(`✅ EXCELENTE\n\nAndamio en ${ubicacion} con Permiso ${folio} ha sido autorizado por ${firma}.`);
-    
-    // Cambiar visualmente el slot a la Tarjeta Verde que subiste
-    const slot = document.getElementById('slot-etiqueta');
-    slot.innerHTML = `<img src="assets/etiqueta_verde.jpg" style="width:100%; height:100%; border-radius:5px; object-fit:cover;">`;
-    slot.style.border = "2px solid #007336";
-    
+    alert(`✅ Protocolo Finalizado por: ${firma}`);
+    document.getElementById('tarjeta-placeholder').innerHTML = `<img src="assets/etiqueta_verde.jpg" width="80" style="border-radius:8px; box-shadow:0 10px 15px rgba(0,0,0,0.3)">`;
+    document.getElementById('etiqueta-status').innerText = "Estado: Seguro (Verde)";
+    document.getElementById('etiqueta-status').style.background = "#dcfce7";
+    document.getElementById('etiqueta-status').style.color = "#166534";
     cerrarChecklist();
 }
