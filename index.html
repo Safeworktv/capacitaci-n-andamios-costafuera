@@ -3,78 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Andamiaje Seguro | PEMEX SSPA</title>
+    <title>SISTEMA DE ENTRENAMIENTO SSPA | PEMEX</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <img src="assets/logo_pemex.png" alt="PEMEX" id="logo-pemex">
-        <div class="header-text">
-            <h1>Simulador de Armado e Inspección</h1>
-            <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+    <div class="background-overlay"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <img src="assets/logo_pemex.png" alt="PEMEX" class="institutional-logo">
+            <div class="v-divider"></div>
+            <div class="brand-info">
+                <h1>ESTACIÓN DE ENTRENAMIENTO VIRTUAL</h1>
+                <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+            </div>
+        </div>
+        <div class="system-status">
+            <div class="sensor">
+                <span class="label">VIENTO</span>
+                <span id="wind-val" class="value">-- KM/H</span>
+            </div>
         </div>
     </header>
 
-    <main id="game-container">
-        <div id="layout-principal">
-            <aside id="inventario">
-                <h3>Componentes</h3>
-                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="base">
-                    <div class="icon-circle">🔩</div>
-                    <div class="pieza-info"><strong>Husillo</strong><span>Base Niveladora</span></div>
-                </div>
-                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="marco">
-                    <div class="icon-circle">🪜</div>
-                    <div class="pieza-info"><strong>Marco</strong><span>Cuerpo Estructural</span></div>
-                </div>
-                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="plataforma">
-                    <div class="icon-circle">⬛</div>
-                    <div class="pieza-info"><strong>Plataforma</strong><span>Charola de Trabajo</span></div>
-                </div>
-                <p class="hint">Arrastre los elementos al área oscura para comenzar el montaje.</p>
-            </aside>
-
-            <section id="area-construccion" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="overlay-stats">
-                    <div class="stat-badge" id="viento-badge">💨 Viento: -- km/hr</div>
-                    <div class="stat-badge" id="etiqueta-status">Estado: En Armado</div>
-                </div>
-                <div id="andamio-visual">
-                    <div id="tarjeta-placeholder"></div>
-                </div>
-            </section>
-        </div>
-
-        <footer id="control-panel">
-            <div class="input-group">
-                <input type="text" id="t-ubicacion" placeholder="Ubicación">
-                <input type="text" id="t-folio" placeholder="Folio del Permiso">
+    <main class="app-layout">
+        <aside class="component-panel">
+            <div class="panel-header">
+                <h2>COMPONENTES</h2>
+                <div class="h-line"></div>
             </div>
-            <button class="btn-main" id="btn-inspeccion" onclick="abrirChecklist()" disabled>Iniciar Inspección Técnica</button>
-        </footer>
-
-        <div id="modal-checklist" class="modal">
-            <div class="modal-card">
-                <header class="modal-header">
-                    <h3>Protocolo de Verificación SSPA</h3>
-                </header>
-                <div class="modal-body">
-                    <div class="check-list">
-                        <label class="custom-check"><input type="checkbox" id="c1"> <span>Nivelación y plomeo [cite: 23]</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c2"> <span>Diagonales instaladas</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c3"> <span>Seguros de charolas activos</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c4"> <span>Rodapiés y barandales completos</span></label>
-                        <label class="custom-check"><input type="checkbox" id="c5"> <span>Sin apoyo en líneas de proceso [cite: 38]</span></label>
-                    </div>
-                    <div class="signature-box">
-                        <input type="text" id="firma-nombre" placeholder="Nombre del Supervisor [cite: 37]">
-                    </div>
-                    <button class="btn-confirm" onclick="validarYFinalizar()">Autorizar Tarjeta Verde</button>
+            <div class="tool-grid">
+                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="base">
+                    <div class="part-preview">🔩</div>
+                    <div class="part-meta"><strong>HUSILLO</strong><p>Nivelación Base</p></div>
+                </div>
+                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="marco">
+                    <div class="part-preview">🪜</div>
+                    <div class="part-meta"><strong>MARCO</strong><p>Soporte Vertical</p></div>
+                </div>
+                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="plataforma">
+                    <div class="part-preview">⬛</div>
+                    <div class="part-meta"><strong>PLATAFORMA</strong><p>Charola de Trabajo</p></div>
                 </div>
             </div>
-        </div>
+            <div class="instruction-box">
+                <p id="guide-text">INICIE ARRASTRANDO EL HUSILLO AL ÁREA DE MONTAJE.</p>
+            </div>
+        </aside>
+
+        <section class="build-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="grid-layer"></div>
+            <div id="scaffold-container">
+                <div id="ground-line"></div>
+            </div>
+            <div class="card-display" id="card-holder">
+                </div>
+            <div class="terminal-log">
+                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA INICIALIZADO. ESPERANDO MANIOBRA...</span>
+            </div>
+        </section>
     </main>
+
+    <footer class="data-footer">
+        <div class="input-container">
+            <div class="field">
+                <label>UBICACIÓN</label>
+                <input type="text" id="loc-input" placeholder="Especifique instalación">
+            </div>
+            <div class="field">
+                <label>PERMISO</label>
+                <input type="text" id="permit-input" placeholder="Folio de trabajo">
+            </div>
+        </div>
+        <button id="btn-inspect" class="action-btn" onclick="openProtocol()" disabled>INICIAR PROTOCOLO TÉCNICO</button>
+    </footer>
+
+    <div id="modal-protocol" class="modal-overlay">
+        <div class="glass-modal">
+            <div class="modal-header">
+                <h3>CERTIFICACIÓN DE SEGURIDAD</h3>
+                <button onclick="closeProtocol()" class="close-x">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="checklist-v3">
+                    <label class="check-row"><input type="checkbox" id="chk1"> <span>Nivelación y Plomeo (Bases y Husillos)</span></label>
+                    <label class="check-row"><input type="checkbox" id="chk2"> <span>Aseguramiento de Diagonales/Crucetas</span></label>
+                    <label class="check-row"><input type="checkbox" id="chk3"> <span>Cierre de Seguros en Charolas</span></label>
+                    <label class="check-row"><input type="checkbox" id="chk4"> <span>Barreras y Rodapiés Perimetrales</span></label>
+                    <label class="check-row"><input type="checkbox" id="chk5"> <span>Distancia de Seguridad a Equipos</span></label>
+                </div>
+                <div class="sign-area">
+                    <label>FIRMA DEL SUPERVISOR</label>
+                    <input type="text" id="signer" placeholder="Escriba nombre completo">
+                </div>
+                <button class="authorize-btn" onclick="completeProcess()">EMITIR TARJETA VERDE</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
