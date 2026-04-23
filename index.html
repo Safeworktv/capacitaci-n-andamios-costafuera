@@ -3,103 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacitación Andamios Costafuera - PEMEX</title>
+    <title>Simulador de Andamiaje Seguro | PEMEX SSPA</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div class="logo-container">
-            <img src="assets/logo_pemex.png" alt="PEMEX" id="logo-pemex">
+        <img src="assets/logo_pemex.png" alt="PEMEX" id="logo-pemex">
+        <div class="header-text">
+            <h1>Simulador de Armado e Inspección</h1>
+            <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
         </div>
-        <h1>SIMULADOR DE ARMADO SEGURO DE ANDAMIOS</h1>
-        <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
     </header>
 
     <main id="game-container">
-        <div id="pantalla-inicio">
-            <div class="welcome-card">
-                <h2>Módulo de Capacitación Técnica</h2>
-                <p>Identificación de componentes y protocolo de etiquetado.</p>
-                <div class="menu-buttons">
-                    <button class="btn-info" onclick="mostrarGlosario()">1. RECONOCIMIENTO DE PIEZAS</button>
-                    <button class="btn-play" onclick="iniciarJuego()">2. INICIAR SIMULACIÓN DE ARMADO</button>
+        <div id="layout-principal">
+            <aside id="inventario">
+                <h3>Componentes</h3>
+                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="base">
+                    <div class="icon-circle">🔩</div>
+                    <div class="pieza-info"><strong>Husillo</strong><span>Base Niveladora</span></div>
                 </div>
-            </div>
-        </div>
+                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="marco">
+                    <div class="icon-circle">🪜</div>
+                    <div class="pieza-info"><strong>Marco</strong><span>Cuerpo Estructural</span></div>
+                </div>
+                <div class="pieza-tool" draggable="true" ondragstart="drag(event)" data-pieza="plataforma">
+                    <div class="icon-circle">⬛</div>
+                    <div class="pieza-info"><strong>Plataforma</strong><span>Charola de Trabajo</span></div>
+                </div>
+                <p class="hint">Arrastre los elementos al área de montaje para comenzar.</p>
+            </aside>
 
-        <div id="zona-inspeccion" style="display:none;">
-            <div class="status-bar">
-                <span>📍 Ubicación: Instalación Costafuera</span>
-                <span id="clima-viento">💨 Viento: Calculando...</span>
-            </div>
-
-            <div class="canvas-simulacion">
+            <section id="area-construccion" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="overlay-stats">
+                    <div class="stat-badge" id="viento-badge">💨 Viento: -- km/hr</div>
+                    <div class="stat-badge" id="etiqueta-status">Estado: En Armado</div>
+                </div>
+                
                 <div id="andamio-visual">
-                    <p>[ Visualización del Andamio ]</p>
+                    <div id="tarjeta-placeholder"></div>
                 </div>
-            </div>
-
-            <div class="controles-etiquetas">
-                <h3>Control de Etiquetado</h3>
-                <div class="etiquetas-layout">
-                    <div class="drop-zone-container">
-                        <div id="slot-etiqueta" class="drop-zone">
-                            <p>Área de Colocación</p>
-                        </div>
-                    </div>
-                    
-                    <div class="formulario-tarjeta">
-                        <h4>Datos para Tarjeta Verde</h4>
-                        <input type="text" id="t-ubicacion" placeholder="Ubicación (Ej. Subnivel 1)">
-                        <input type="text" id="t-folio" placeholder="No. Permiso de Trabajo">
-                        <input type="date" id="t-fecha">
-                        <p class="nota">* Todos los campos son obligatorios según el estándar.</p>
-                    </div>
-                </div>
-
-                <div class="etiquetas-disponibles">
-                    <div class="etiqueta-box">
-                        <img src="assets/etiqueta_roja.jpg" id="roja" class="draggable" alt="Tarjeta Roja">
-                        <span>ROJA: En Armado</span>
-                    </div>
-                    <div class="etiqueta-box">
-                        <img src="assets/etiqueta_verde.jpg" id="verde" class="draggable" alt="Tarjeta Verde">
-                        <span>VERDE: Autorizado</span>
-                    </div>
-                </div>
-                <button class="btn-check" onclick="abrirChecklist()">REALIZAR INSPECCIÓN TÉCNICA</button>
-            </div>
+            </section>
         </div>
+
+        <footer id="control-panel">
+            <div class="input-group">
+                <input type="text" id="t-ubicacion" placeholder="Ubicación de la Instalación">
+                <input type="text" id="t-folio" placeholder="Folio del Permiso">
+            </div>
+            <button class="btn-main" id="btn-inspeccion" onclick="abrirChecklist()" disabled>Iniciar Protocolo de Inspección</button>
+        </footer>
 
         <div id="modal-checklist" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>📋 PROTOCOLO DE VERIFICACIÓN</h3>
-                    <button class="close-btn" onclick="cerrarChecklist()">&times;</button>
+            <div class="modal-card">
+                <header class="modal-header">
+                    <h3>Protocolo de Verificación SSPA</h3>
+                    <button class="close-x" onclick="cerrarChecklist()">&times;</button>
+                </header>
+                <div class="modal-body">
+                    <div class="check-list">
+                        <label class="custom-check"><input type="checkbox" id="c1"> <span>Nivelación y plomeo sobre parrilla</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c2"> <span>Diagonales y crucetas instaladas</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c3"> <span>Seguros de charolas activos</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c4"> <span>Rodapiés y barandales completos</span></label>
+                        <label class="custom-check"><input type="checkbox" id="c5"> <span>Sin apoyo en líneas de proceso</span></label>
+                    </div>
+                    <div class="signature-box">
+                        <label>Firma Electrónica del Supervisor:</label>
+                        <input type="text" id="firma-nombre" placeholder="Nombre completo">
+                    </div>
+                    <button class="btn-confirm" onclick="validarYFinalizar()">Autorizar Tarjeta Verde</button>
                 </div>
-                <hr>
-                <form id="form-inspeccion">
-                    <div class="check-group">
-                        <div class="check-item"><input type="checkbox" id="c1"> <label>Nivelación sobre parrilla.</label></div>
-                        <div class="check-item"><input type="checkbox" id="c2"> <label>Diagonales instaladas.</label></div>
-                        <div class="check-item"><input type="checkbox" id="c3"> <label>Seguros de charolas activos.</label></div>
-                        <div class="check-item"><input type="checkbox" id="c4"> <label>Rodapiés y barandales completos.</label></div>
-                        <div class="check-item"><input type="checkbox" id="c5"> <label>Escalera interna libre.</label></div>
-                        <div class="check-item"><input type="checkbox" id="c6"> <label>Sin apoyo en tuberías de proceso.</label></div>
-                    </div>
-                    <div class="signature-area">
-                        <label>Nombre del Supervisor (Firma):</label>
-                        <input type="text" id="firma-nombre">
-                    </div>
-                    <button type="button" class="btn-autorizar" onclick="validarYFinalizar()">AUTORIZAR Y COLOCAR TARJETA</button>
-                </form>
             </div>
         </div>
     </main>
-
-    <footer>
-        <p>&copy; 2026 PEMEX - SSPA</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>
