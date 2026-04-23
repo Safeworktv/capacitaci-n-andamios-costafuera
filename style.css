@@ -1,70 +1,46 @@
 :root {
-    --primary: #007336; /* Verde PEMEX */
-    --accent: #ee2d24; /* Rojo PEMEX */
-    --bg: #f8f9fa;
+    --primary: #007336;
+    --accent: #ee2d24;
     --dark: #1e293b;
-    --text-muted: #64748b;
-    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow: 0 10px 15px rgba(0,0,0,0.1);
 }
 
-body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; }
+body { font-family: 'Inter', sans-serif; background: #f8f9fa; margin: 0; }
 
-/* Header Moderno */
 header { 
-    background: white; padding: 20px 40px; display: flex; align-items: center; 
-    gap: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 4px solid var(--primary);
+    background: white; padding: 25px 40px; display: flex; align-items: center; 
+    gap: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-bottom: 5px solid var(--primary);
 }
-#logo-pemex { height: 80px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-.header-text h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.5px; }
-.header-text p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
 
-/* Layout */
-#layout-principal { display: flex; gap: 24px; padding: 30px; max-width: 1300px; margin: 0 auto; height: 60vh; }
+#logo-pemex { height: 100px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
 
-#inventario { width: 300px; background: white; padding: 25px; border-radius: 16px; box-shadow: var(--shadow); }
-#inventario h3 { margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+#layout-principal { display: flex; gap: 24px; padding: 30px; height: 60vh; max-width: 1400px; margin: 0 auto; }
+
+#inventario { width: 320px; background: white; padding: 25px; border-radius: 20px; box-shadow: var(--shadow); }
 
 .pieza-tool { 
-    display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8fafc; 
-    border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; cursor: grab; transition: 0.2s;
+    display: flex; align-items: center; gap: 15px; padding: 15px; background: #f1f5f9; 
+    border-radius: 12px; margin-bottom: 15px; cursor: grab; border: 1px solid #e2e8f0;
 }
-.pieza-tool:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-.icon-circle { width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.pieza-info strong { display: block; font-size: 0.9rem; }
-.pieza-info span { font-size: 0.75rem; color: var(--text-muted); }
-
-/* Área de Construcción */
 #area-construccion { 
-    flex-grow: 1; background: #0f172a; border-radius: 20px; position: relative; 
-    display: flex; flex-direction: column-reverse; align-items: center; overflow: hidden;
-    background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 20px 20px;
+    flex-grow: 1; background: var(--dark); border-radius: 24px; position: relative; 
+    display: flex; flex-direction: column-reverse; align-items: center; padding-bottom: 40px;
+    background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px;
 }
 
-.stat-badge { background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-.overlay-stats { position: absolute; top: 20px; width: 90%; display: flex; justify-content: space-between; z-index: 10; }
-
-/* Piezas Visuales */
-.andamio-pieza { width: 240px; border: 2px solid rgba(255,255,255,0.3); margin-bottom: -2px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.tipo-base { height: 30px; background: #64748b; border-bottom: 8px solid #475569; }
-.tipo-marco { height: 120px; border-left: 15px solid #94a3b8; border-right: 15px solid #94a3b8; background: rgba(255,255,255,0.02); }
-.tipo-plataforma { height: 15px; background: #334155; }
-
-/* Panel de Control */
-#control-panel { 
-    position: fixed; bottom: 0; left: 0; right: 0; background: white; 
-    padding: 20px 40px; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 20px; align-items: center;
+.andamio-pieza { 
+    width: 260px; border: 3px solid #94a3b8; margin-bottom: -3px; 
+    display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;
 }
-.input-group input { padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; width: 200px; outline: none; }
-.btn-main { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.tipo-base { height: 35px; background: #475569; border-bottom: 10px solid #1e293b; }
+.tipo-marco { height: 130px; border-left: 18px solid #94a3b8; border-right: 18px solid #94a3b8; background: rgba(255,255,255,0.05); }
+.tipo-plataforma { height: 20px; background: #334155; }
+
+#control-panel { position: fixed; bottom: 0; width: 100%; background: white; padding: 25px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid #ddd; }
+
+.btn-main { background: var(--primary); color: white; padding: 15px 40px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; }
 .btn-main:disabled { background: #cbd5e1; cursor: not-allowed; }
 
-/* Modal Moderno */
-.modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); z-index: 1000; }
-.modal-card { background: white; width: 90%; max-width: 500px; margin: 40px auto; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden; }
-.modal-header { background: #f8fafc; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; }
-.modal-body { padding: 30px; }
-.custom-check { display: flex; align-items: center; gap: 15px; padding: 12px; background: #f1f5f9; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
-.signature-box { margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px; }
-.signature-box input { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
-.btn-confirm { width: 100%; background: var(--primary); color: white; padding: 15px; border: none; border-radius: 12px; font-weight: 700; margin-top: 20px; cursor: pointer; }
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; }
+.modal-card { background: white; max-width: 500px; margin: 5% auto; border-radius: 20px; padding: 30px; }
