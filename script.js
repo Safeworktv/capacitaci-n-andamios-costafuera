@@ -1,63 +1,104 @@
-let armado = { base: false, marco: false, plataforma: false };
-let vientoVal = Math.floor(Math.random() * 55) + 5;
+let step = 0; // 0:Base, 1:Marco, 2:Plataforma
+let wind = Math.floor(Math.random() * 55) + 5;
+let hasError = false;
 
-// Inicialización
-const vientoBadge = document.getElementById('viento-badge');
-vientoBadge.innerText = `💨 Viento: ${vientoVal} km/hr`;
-if(vientoVal > 45) {
-    vientoBadge.style.background = "#fee2e2";
-    vientoBadge.style.color = "#ef4444";
-}
+// Inicialización de Pantalla
+document.getElementById('wind-val').innerText = `${wind} KM/H`;
+if(wind > 45) document.getElementById('wind-val').style.color = "#ee2d24";
 
 function allowDrop(ev) { ev.preventDefault(); }
-function drag(ev) { ev.dataTransfer.setData("pieza", ev.target.dataset.pieza); }
+function drag(ev) { ev.dataTransfer.setData("type", ev.target.dataset.pieza); }
 
 function drop(ev) {
     ev.preventDefault();
-    let tipo = ev.dataTransfer.getData("pieza");
-    
-    if (tipo === 'base' && !armado.base) {
-        crearPieza('tipo-base', 'Nivelación OK');
-        armado.base = true;
-    } else if (tipo === 'marco' && armado.base && !armado.marco) {
-        crearPieza('tipo-marco', 'Estructura OK');
-        armado.marco = true;
-    } else if (tipo === 'plataforma' && armado.marco && !armado.plataforma) {
-        crearPieza('tipo-plataforma', 'Superficie OK');
-        armado.plataforma = true;
-        document.getElementById('btn-inspeccion').disabled = false;
-        document.getElementById('tarjeta-placeholder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="80" style="border-radius:8px; box-shadow:0 10px 15px rgba(0,0,0,0.3)">`;
-    } else {
-        alert("Sigue la secuencia lógica de seguridad: Husillo > Marco > Plataforma");
+    const type = ev.dataTransfer.getData("type");
+    const log = document.getElementById('log-text');
+
+    if (type === 'base' && step === 0) {
+        addPiece('piece-base', 'NIVELACIÓN BASE');
+        triggerRandomError("HUSILLO DESNIVELADO");
+        step = 1;
+        updateGuide("PASO 2: INSTALACIÓN DE MARCO ESTRUCTURAL");
+    } 
+    else if (type === 'marco' && step === 1 && !hasError) {
+        addPiece('piece-frame', 'POSTE VERTICAL');
+        triggerRandomError("FALTA PLOMEO EN MARCO");
+        step = 2;
+        updateGuide("PASO 3: MONTAJE DE PLATAFORMA");
+    } 
+    else if (type === 'plataforma' && step === 2 && !hasError) {
+        addPiece('piece-deck', 'CHAROLA');
+        triggerRandomError("SEGURO NO ACCIONADO");
+        document.getElementById('btn-inspect').disabled = false;
+        updateGuide("MONTAJE FINALIZADO. INICIE PROTOCOLO.");
+        showRedTag();
+    } 
+    else if (hasError) {
+        log.innerText = "ACCION RECHAZADA: CORRIJA EL HALLAZGO VISUAL EN EL ANDAMIO.";
+        log.style.color = "#ee2d24";
     }
 }
 
-function crearPieza(clase, label) {
-    const contenedor = document.getElementById('andamio-visual');
+function addPiece(className, label) {
+    const container = document.getElementById('scaffold-container');
     const div = document.createElement('div');
-    div.className = `andamio-pieza ${clase}`;
+    div.className = `scaffold-piece ${className}`;
+    div.id = `piece-${step}`;
     div.innerHTML = `<span>${label}</span>`;
-    contenedor.appendChild(div);
+    
+    // Corregir error al hacer clic
+    div.onclick = function() {
+        if(this.classList.contains('error')) {
+            this.classList.remove('error');
+            hasError = false;
+            document.getElementById('log-text').innerText = "HALLAZGO CORREGIDO SATISFACTORIAMENTE.";
+            document.getElementById('log-text').style.color = "#00ff73";
+        }
+    };
+    
+    container.prepend(div);
 }
 
-function abrirChecklist() { document.getElementById('modal-checklist').style.display = 'block'; }
-function cerrarChecklist() { document.getElementById('modal-checklist').style.display = 'none'; }
+function triggerRandomError(msg) {
+    if (Math.random() > 0.4) { // 60% probabilidad de error
+        setTimeout(() => {
+            const last = document.getElementById(`piece-${step-1}`);
+            last.classList.add('error');
+            hasError = true;
+            document.getElementById('log-text').innerText = `ALERTA TÉCNICA: ${msg}`;
+            document.getElementById('log-text').style.color = "yellow";
+        }, 300);
+    }
+}
 
-function validarYFinalizar() {
-    const checks = ['c1','c2','c3','c4','c5'];
+function updateGuide(txt) { document.getElementById('guide-text').innerText = txt; }
+
+function showRedTag() {
+    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="90" style="border-radius:10px; border:2px solid red;">`;
+}
+
+function openProtocol() { 
+    if(hasError) return;
+    document.getElementById('modal-protocol').style.display = 'block'; 
+}
+
+function closeProtocol() { document.getElementById('modal-protocol').style.display = 'none'; }
+
+function completeProcess() {
+    const checks = ['chk1','chk2','chk3','chk4','chk5'];
+    const signer = document.getElementById('signer').value;
+
+    if(wind > 45) { alert("OPERACIÓN CANCELADA: VIENTO EXCESIVO."); return; }
+    if(!signer) { alert("FIRMA REQUERIDA."); return; }
+    
     for(let id of checks) {
         if(!document.getElementById(id).checked) {
-            alert("🛑 Hallazgo Técnico detectado. Corrige antes de autorizar."); return;
+            alert("VERIFIQUE TODOS LOS RUBROS DEL PROTOCOLO.");
+            return;
         }
     }
-    const firma = document.getElementById('firma-nombre').value.trim();
-    if(!firma) { alert("La firma es obligatoria."); return; }
-    if(vientoVal > 45) { alert("🛑 Suspendido por ráfagas de viento."); return; }
 
-    alert(`✅ Protocolo Finalizado por: ${firma}`);
-    document.getElementById('tarjeta-placeholder').innerHTML = `<img src="assets/etiqueta_verde.jpg" width="80" style="border-radius:8px; box-shadow:0 10px 15px rgba(0,0,0,0.3)">`;
-    document.getElementById('etiqueta-status').innerText = "Estado: Seguro (Verde)";
-    document.getElementById('etiqueta-status').style.background = "#dcfce7";
-    document.getElementById('etiqueta-status').style.color = "#166534";
-    cerrarChecklist();
+    alert(`CERTIFICACIÓN EXITOSA: ${signer}`);
+    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_verde.jpg" width="90" style="border-radius:10px; border:2px solid #00ff73;">`;
+    closeProtocol();
 }
