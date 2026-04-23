@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Andamios Costafuera - PEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="assets/logo_pemex.png" alt="PEMEX" id="logo-pemex">
+        </div>
+        <h1>SIMULADOR DE ARMADO SEGURO DE ANDAMIOS</h1>
+    </header>
+
+    <main id="game-container">
+        <div id="pantalla-inicio">
+            <h2>Bienvenido al Módulo de Capacitación</h2>
+            <p>Seleccione una opción para comenzar:</p>
+            <div class="menu-buttons">
+                <button onclick="mostrarGlosario()">RECONOCIMIENTO DE PIEZAS</button>
+                <button onclick="iniciarJuego()">INICIAR SIMULACIÓN DE ARMADO</button>
+            </div>
+        </div>
+
+        <div id="zona-inspeccion" style="display:none;">
+            <h3>Estado de Inspección del Andamio</h3>
+            <div id="slot-etiqueta" class="drop-zone">
+                <p>Arrastre la etiqueta correspondiente aquí</p>
+            </div>
+            <div class="etiquetas-disponibles">
+                <img src="assets/etiqueta_roja.jpg" id="roja" class="draggable" alt="Etiqueta Roja">
+                <img src="assets/etiqueta_verde.jpg" id="verde" class="draggable" alt="Etiqueta Verde">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
