@@ -36,30 +36,29 @@
             <div class="tool-grid">
                 <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="base">
                     <div class="part-preview">🔩</div>
-                    <div class="part-meta"><strong>HUSILLO</strong><p>Nivelación Base</p></div>
+                    <div class="part-meta"><strong>HUSILLO</strong><p>Paso 1: Nivelación</p></div>
                 </div>
                 <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="marco">
                     <div class="part-preview">🪜</div>
-                    <div class="part-meta"><strong>MARCO</strong><p>Soporte Vertical</p></div>
+                    <div class="part-meta"><strong>MARCO</strong><p>Paso 2: Estructura</p></div>
                 </div>
                 <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="plataforma">
                     <div class="part-preview">⬛</div>
-                    <div class="part-meta"><strong>PLATAFORMA</strong><p>Charola de Trabajo</p></div>
+                    <div class="part-meta"><strong>PLATAFORMA</strong><p>Paso 3: Superficie</p></div>
                 </div>
             </div>
             <div class="instruction-box">
-                <p id="guide-text">PASO 1: ARRASTRE EL HUSILLO AL ÁREA DE MONTAJE PARA ESTABLECER LA BASE.</p>
+                <p id="guide-text">PASO 1: ARRASTRE EL HUSILLO AL ÁREA DE MONTAJE.</p>
             </div>
         </aside>
 
         <section class="build-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
             <div class="grid-layer"></div>
             <div id="scaffold-container">
-                <div id="ground-line"></div>
-            </div>
+                </div>
             <div class="card-display" id="card-holder"></div>
             <div class="terminal-log">
-                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA INICIALIZADO. ESPERANDO PASO 1...</span>
+                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA LISTO. ESPERANDO COMPONENTES...</span>
             </div>
         </section>
     </main>
@@ -67,10 +66,24 @@
     <footer class="data-footer">
         <div class="input-container">
             <div class="field"><label>UBICACIÓN</label><input type="text" id="loc-input" placeholder="Instalación"></div>
-            <div class="field"><label>PERMISO</label><input type="text" id="permit-input" placeholder="Folio"></div>
+            <div class="field"><label>PERMISO</label><input type="text" id="permit-input" placeholder="Folio SSPA"></div>
         </div>
         <button id="btn-inspect" class="action-btn" onclick="openProtocol()" disabled>INICIAR PROTOCOLO TÉCNICO</button>
     </footer>
+
+    <div id="modal-protocol" class="modal-overlay">
+        <div class="glass-modal">
+            <h3>CERTIFICACIÓN SSPA</h3>
+            <div class="checklist">
+                <label><input type="checkbox" id="chk1"> Nivelación y Plomeo</label>
+                <label><input type="checkbox" id="chk2"> Diagonales Instaladas</label>
+                <label><input type="checkbox" id="chk3"> Seguros de Charolas</label>
+                <label><input type="checkbox" id="chk4"> Rodapiés Completos</label>
+            </div>
+            <input type="text" id="signer" placeholder="Nombre del Supervisor" class="modal-input">
+            <button class="authorize-btn" onclick="completeProcess()">EMITIR TARJETA VERDE</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
