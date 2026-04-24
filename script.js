@@ -1,61 +1,78 @@
-let currentStep = 0; 
-let currentWind = Math.floor(Math.random() * 50) + 5;
+const pasos = [
+    {
+        fase: "1. INSPECCIÓN",
+        titulo: "Verificación de Componentes",
+        desc: "Revise que husillos y plataformas no tengan daños estructurales antes de iniciar la maniobra en cubierta.",
+        img: "paso0_inspeccion.png",
+        checks: ["Roscas de husillos limpias", "Ganchos de charolas sin deformación", "EPP: Arnés y casco con barbiquejo"],
+        tag: "etiqueta_roja.jpg"
+    },
+    {
+        fase: "2. CIMENTACIÓN",
+        titulo: "Soporte sobre Viguetas Maestras",
+        desc: "Las bases deben asentarse sobre durmientes de madera colocados directamente en las viguetas maestras de la plataforma.",
+        img: "paso1_bases.png",
+        checks: ["Apoyo directo en viguetas maestras", "Uso de durmientes de madera estable", "Nivelación inicial comprobada"],
+        tag: "etiqueta_roja.jpg"
+    },
+    {
+        fase: "3. MONTAJE",
+        titulo: "Protecciones y Estructura",
+        desc: "Instale rodapiés de 10cm y pasamanos a 1 metro. Verifique que todas las crucetas tengan sus seguros.",
+        img: "paso2_andamio.png",
+        checks: ["Rodapiés de 10cm instalados", "Pasamanos a 1m de altura", "Crucetas con seguros activos"],
+        tag: "etiqueta_roja.jpg"
+    }
+];
 
-document.getElementById('wind-val').innerText = `${currentWind} KM/H`;
+let indiceActual = 0;
 
-function allowDrop(ev) { ev.preventDefault(); }
-function drag(ev) { ev.dataTransfer.setData("type", ev.target.dataset.pieza); }
+function cargarPaso() {
+    const p = pasos[indiceActual];
+    document.getElementById('phase-badge').innerText = p.fase;
+    document.getElementById('step-title').innerText = p.titulo;
+    document.getElementById('step-desc').innerText = p.desc;
+    document.getElementById('main-image').src = `assets/${p.img}`;
+    document.getElementById('current-tag').src = `assets/${p.tag}`;
 
-function drop(ev) {
-    ev.preventDefault();
-    const type = ev.dataTransfer.getData("type");
-    const container = document.getElementById('scaffold-container');
+    const list = document.getElementById('check-list');
+    list.innerHTML = "";
+    p.checks.forEach(c => {
+        list.innerHTML += `<label class="check-item"><input type="checkbox"> <span>${c}</span></label>`;
+    });
+}
 
-    if (type === 'base' && currentStep === 0) {
-        addPiece(container, 'piece-base', 'HUSILLO INSTALADO');
-        currentStep = 1;
-        updateStatus("PASO 2: ARRASTRE EL MARCO ESTRUCTURAL.", "BASE NIVELADA.");
-    } 
-    else if (type === 'marco' && currentStep === 1) {
-        addPiece(container, 'piece-frame', 'MARCO VERTICAL');
-        currentStep = 2;
-        updateStatus("PASO 3: ARRASTRE LA PLATAFORMA.", "ESTRUCTURA POSICIONADA.");
-    } 
-    else if (type === 'plataforma' && currentStep === 2) {
-        addPiece(container, 'piece-deck', 'PLATAFORMA FINALIZADA');
-        document.getElementById('btn-inspect').disabled = false;
-        updateStatus("MONTAJE COMPLETO. INICIE INSPECCIÓN.", "LISTO PARA CERTIFICAR.");
-        showRedTag();
-    } 
-    else {
-        alert("SIGA EL ORDEN: 1. HUSILLO, 2. MARCO, 3. PLATAFORMA");
+function validarPaso() {
+    const checks = document.querySelectorAll('#check-list input[type="checkbox"]');
+    const todos = Array.from(checks).every(c => c.checked);
+
+    if (!todos) {
+        alert("🛑 HALLAZGO SSPA: Debe validar todos los puntos de seguridad antes de continuar.");
+        return;
+    }
+
+    indiceActual++;
+    if (indiceActual < pasos.length) {
+        cargarPaso();
+    } else {
+        iniciarExamenFinal();
     }
 }
 
-function addPiece(parent, className, label) {
-    const div = document.createElement('div');
-    div.className = `scaffold-piece ${className}`;
-    div.innerHTML = `<span>${label}</span>`;
-    parent.appendChild(div);
+function iniciarExamenFinal() {
+    alert("📝 INICIANDO EVALUACIÓN DE CERTIFICACIÓN");
+    const r1 = prompt("¿Cuál es la distancia mínima a líneas eléctricas? \n A) 1m \n B) 3m \n C) 5m");
+    
+    if (r1.toLowerCase() === 'b' || r1 === '3m') {
+        alert("✅ CERTIFICACIÓN EXITOSA. El andamio cuenta con Tarjeta Verde.");
+        document.getElementById('main-image').src = "assets/paso3_finalizado.png";
+        document.getElementById('current-tag').src = "assets/etiqueta_verde.jpg";
+        document.getElementById('tag-text').innerText = "SEGURO PARA USO";
+        document.getElementById('tag-text').style.color = "#007336";
+    } else {
+        alert("❌ EXAMEN REPROBADO. Repase la distancia de seguridad normativa.");
+        location.reload();
+    }
 }
 
-function updateStatus(guide, log) {
-    document.getElementById('guide-text').innerText = guide;
-    document.getElementById('log-text').innerText = log;
-    document.getElementById('log-text').style.color = "#00ff73";
-}
-
-function showRedTag() {
-    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="90" style="border: 2px solid red; border-radius: 5px;">`;
-}
-
-function openProtocol() { document.getElementById('modal-protocol').style.display = 'flex'; }
-function closeProtocol() { document.getElementById('modal-protocol').style.display = 'none'; }
-
-function completeProcess() {
-    const signer = document.getElementById('signer').value;
-    if(!signer) { alert("INGRESE NOMBRE DEL SUPERVISOR."); return; }
-    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_verde.jpg" width="90" style="border: 2px solid #00ff73; border-radius: 5px;">`;
-    alert("ANDAMIO CERTIFICADO CON TARJETA VERDE.");
-    closeProtocol();
-}
+window.onload = cargarPaso;
