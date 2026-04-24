@@ -3,87 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenamiento de Armado de Andamios | PEMEX</title>
+    <title>Capacitación SSPA: Montaje en Plataforma</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background-overlay"></div>
-    
     <header class="main-header">
-        <div class="header-content">
-            <img src="assets/logo_pemex.png" alt="PEMEX" class="institutional-logo">
-            <div class="v-divider"></div>
-            <div class="brand-info">
-                <h1>ESTACIÓN DE ENTRENAMIENTO DE ARMADO DE ANDAMIOS</h1>
-                <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
-            </div>
+        <img src="assets/logo_pemex.png" alt="PEMEX" class="logo-inst">
+        <div class="brand">
+            <h1>ENTRENAMIENTO TÉCNICO DE ANDAMIAJE</h1>
+            <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
         </div>
-        <div class="system-status">
-            <div class="sensor">
-                <span class="label">VIENTO</span>
-                <span id="wind-val" class="value">-- KM/H</span>
-            </div>
-        </div>
+        <div id="phase-badge" class="badge">FASE 1: INSPECCIÓN</div>
     </header>
 
-    <main class="app-layout">
-        <aside class="component-panel">
-            <div class="panel-header">
-                <h2>COMPONENTES</h2>
-                <div class="h-line"></div>
-            </div>
-            <div class="tool-grid">
-                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="base">
-                    <div class="part-preview">🔩</div>
-                    <div class="part-meta"><strong>HUSILLO</strong><p>Paso 1: Nivelación</p></div>
-                </div>
-                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="marco">
-                    <div class="part-preview">🪜</div>
-                    <div class="part-meta"><strong>MARCO</strong><p>Paso 2: Estructura</p></div>
-                </div>
-                <div class="part-card" draggable="true" ondragstart="drag(event)" data-pieza="plataforma">
-                    <div class="part-preview">⬛</div>
-                    <div class="part-meta"><strong>PLATAFORMA</strong><p>Paso 3: Superficie</p></div>
+    <main class="app-container">
+        <section class="viewer">
+            <div class="image-card">
+                <img src="assets/paso0_inspeccion.png" id="main-image">
+                <div class="instruction-box">
+                    <h2 id="step-title">Inspección de Componentes</h2>
+                    <p id="step-desc">Cargando instrucciones...</p>
                 </div>
             </div>
-            <div class="instruction-box">
-                <p id="guide-text">PASO 1: ARRASTRE EL HUSILLO AL ÁREA DE MONTAJE.</p>
-            </div>
-        </aside>
-
-        <section class="build-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="grid-layer"></div>
-            <div id="scaffold-container">
-                </div>
-            <div class="card-display" id="card-holder"></div>
-            <div class="terminal-log">
-                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA LISTO. ESPERANDO PASO 1...</span>
+            <div class="status-bar">
+                <span class="tag-label">ETIQUETA ACTUAL:</span>
+                <img src="assets/etiqueta_roja.jpg" id="current-tag" class="tag-icon">
+                <span id="tag-text">NO SEGURO PARA USO</span>
             </div>
         </section>
+
+        <aside class="checklist-panel">
+            <h3>PUNTOS DE VERIFICACIÓN</h3>
+            <div id="check-list" class="checks-container">
+                </div>
+            <button class="btn-next" onclick="validarPaso()">Confirmar y Siguiente Paso</button>
+        </aside>
     </main>
-
-    <footer class="data-footer">
-        <div class="input-container">
-            <div class="field"><label>UBICACIÓN</label><input type="text" id="loc-input" placeholder="Instalación"></div>
-            <div class="field"><label>PERMISO</label><input type="text" id="permit-input" placeholder="Folio SSPA"></div>
-        </div>
-        <button id="btn-inspect" class="action-btn" onclick="openProtocol()" disabled>INICIAR PROTOCOLO TÉCNICO</button>
-    </footer>
-
-    <div id="modal-protocol" class="modal-overlay">
-        <div class="glass-modal">
-            <h3>CERTIFICACIÓN SSPA</h3>
-            <div class="checklist">
-                <label><input type="checkbox" id="chk1"> Nivelación y Plomeo</label>
-                <label><input type="checkbox" id="chk2"> Diagonales Instaladas</label>
-                <label><input type="checkbox" id="chk3"> Seguros de Charolas</label>
-                <label><input type="checkbox" id="chk4"> Rodapiés Completos</label>
-            </div>
-            <input type="text" id="signer" placeholder="Nombre del Supervisor" class="modal-input">
-            <button class="authorize-btn" onclick="completeProcess()">EMITIR TARJETA VERDE</button>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
