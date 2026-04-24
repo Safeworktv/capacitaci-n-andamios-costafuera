@@ -1,60 +1,63 @@
-let step = 0; 
-let wind = Math.floor(Math.random() * 50) + 5;
+let currentStep = 0; // 0:Base, 1:Marco, 2:Plataforma
+let currentWind = Math.floor(Math.random() * 50) + 5;
 
-// Mostrar viento inicial
-document.getElementById('wind-val').innerText = `${wind} KM/H`;
+document.getElementById('wind-val').innerText = `${currentWind} KM/H`;
 
 function allowDrop(ev) { ev.preventDefault(); }
-
-function drag(ev) { 
-    ev.dataTransfer.setData("type", ev.target.dataset.pieza); 
-}
+function drag(ev) { ev.dataTransfer.setData("type", ev.target.dataset.pieza); }
 
 function drop(ev) {
     ev.preventDefault();
     const type = ev.dataTransfer.getData("type");
-    const log = document.getElementById('log-text');
     const container = document.getElementById('scaffold-container');
+    const log = document.getElementById('log-text');
 
-    // PASO 1: HUSILLO
-    if (type === 'base' && step === 0) {
-        addPieceVisual(container, 'piece-base', 'HUSILLO NIVELADO');
-        step = 1;
-        updateUI("PASO 2: ARRASTRE EL MARCO ESTRUCTURAL.", "BASE INSTALADA. ESPERANDO MARCO...");
+    if (type === 'base' && currentStep === 0) {
+        addPiece(container, 'piece-base', 'HUSILLO NIVELADO');
+        currentStep = 1;
+        updateStatus("PASO 2: ARRASTRE EL MARCO.", "BASE INSTALADA.");
     } 
-    // PASO 2: MARCO
-    else if (type === 'marco' && step === 1) {
-        addPieceVisual(container, 'piece-frame', 'ESTRUCTURA VERTICAL');
-        step = 2;
-        updateUI("PASO 3: ARRASTRE LA PLATAFORMA (CHAROLA).", "MARCO POSICIONADO. ESPERANDO PLATAFORMA...");
+    else if (type === 'marco' && currentStep === 1) {
+        addPiece(container, 'piece-frame', 'MARCO ESTRUCTURAL');
+        currentStep = 2;
+        updateStatus("PASO 3: ARRASTRE LA PLATAFORMA.", "MARCO POSICIONADO.");
     } 
-    // PASO 3: PLATAFORMA
-    else if (type === 'plataforma' && step === 2) {
-        addPieceVisual(container, 'piece-deck', 'PLATAFORMA DE TRABAJO');
+    else if (type === 'plataforma' && currentStep === 2) {
+        addPiece(container, 'piece-deck', 'PLATAFORMA INSTALADA');
         document.getElementById('btn-inspect').disabled = false;
-        updateUI("MONTAJE FINALIZADO. INICIE INSPECCIÓN TÉCNICA.", "ESTRUCTURA COMPLETA. LISTA PARA VALIDACIÓN.");
+        updateStatus("MONTAJE COMPLETO. INICIE INSPECCIÓN.", "ESTRUCTURA LISTA.");
         showRedTag();
     } 
     else {
-        log.innerText = "ORDEN INCORRECTO. SIGA LA SECUENCIA TÉCNICA.";
-        log.style.color = "#ee2d24";
+        log.innerText = "ERROR: SIGA LA SECUENCIA TÉCNICA (BASE > MARCO > PLATAFORMA).";
+        log.style.color = "red";
     }
 }
 
-function addPieceVisual(parent, className, label) {
+function addPiece(parent, className, label) {
     const div = document.createElement('div');
     div.className = `scaffold-piece ${className}`;
     div.innerHTML = `<span>${label}</span>`;
     parent.appendChild(div);
 }
 
-function updateUI(guide, log) {
+function updateStatus(guide, log) {
     document.getElementById('guide-text').innerText = guide;
-    const logEl = document.getElementById('log-text');
-    logEl.innerText = log;
-    logEl.style.color = "#00ff73";
+    document.getElementById('log-text').innerText = log;
+    document.getElementById('log-text').style.color = "#00ff73";
 }
 
 function showRedTag() {
-    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="100" style="border: 2px solid red; border-radius: 8px;">`;
+    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_roja.jpg" width="90" style="border: 2px solid red; border-radius: 5px;">`;
+}
+
+function openProtocol() { document.getElementById('modal-protocol').style.display = 'flex'; }
+function closeProtocol() { document.getElementById('modal-protocol').style.display = 'none'; }
+
+function completeProcess() {
+    const signer = document.getElementById('signer').value;
+    if(!signer) { alert("FIRMA REQUERIDA."); return; }
+    alert("CERTIFICACIÓN EXITOSA.");
+    document.getElementById('card-holder').innerHTML = `<img src="assets/etiqueta_verde.jpg" width="90" style="border: 2px solid #00ff73; border-radius: 5px;">`;
+    closeProtocol();
 }
