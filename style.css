@@ -1,33 +1,233 @@
+/* =========================================
+   SIMULADOR DE CAPACITACIÓN SSPA - ANDAMIOS
+   Entorno: Plataformas Marinas
+   ========================================= */
+
 :root {
     --pemex-green: #007336;
     --pemex-red: #ee2d24;
-    --dark: #1e293b;
+    --dark-navy: #0f172a;
+    --light-gray: #f8fafc;
+    --border-color: #e2e8f0;
 }
 
-body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; color: var(--dark); }
-
-.main-header { 
-    background: white; padding: 15px 40px; display: flex; align-items: center; 
-    border-bottom: 5px solid var(--pemex-green); box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.logo-inst { height: 70px; margin-right: 25px; }
-.brand h1 { margin: 0; font-size: 1.2rem; }
-.brand p { margin: 0; font-size: 0.8rem; color: #64748b; }
-.badge { margin-left: auto; background: var(--dark); color: white; padding: 8px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9;
+    color: var(--dark-navy);
+    line-height: 1.5;
+}
 
-.app-container { display: flex; gap: 20px; padding: 25px; height: calc(100vh - 120px); }
+/* Encabezado Profesional */
+.main-header {
+    background: #ffffff;
+    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 5px solid var(--pemex-green);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 
-.viewer { flex: 2; display: flex; flex-direction: column; gap: 15px; }
-.image-card { background: black; border-radius: 15px; flex-grow: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.image-card img { max-height: 90%; }
+.logo-inst {
+    height: 65px;
+    margin-right: 20px;
+}
 
-.instruction-box { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); color: white; padding: 20px; }
+.brand h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
 
-.checklist-panel { width: 350px; background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+.brand p {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
 
-.check-item { display: flex; gap: 12px; background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.85rem; }
+.badge {
+    margin-left: auto;
+    background: var(--dark-navy);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
 
-.btn-next { background: var(--pemex-green); color: white; border: none; width: 100%; padding: 18px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-.status-bar { background: white; padding: 15px; border-radius: 10px; display: flex; align-items: center; gap: 15px; font-weight: 800; font-size: 0.8rem; }
-.tag-icon { height: 40px; border-radius: 4px; }
+/* Contenedor Principal */
+.app-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 100px);
+}
+
+/* Área del Visualizador de Imágenes */
+.viewer {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.image-card {
+    background: #000000;
+    border-radius: 12px;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.image-card img {
+    max-height: 90%;
+    max-width: 95%;
+    object-fit: contain;
+}
+
+.instruction-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    color: #ffffff;
+    padding: 1.5rem;
+}
+
+.instruction-box h2 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #4ade80; /* Verde neón para resaltar el título */
+}
+
+.instruction-box p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Panel de Check-list Lateral */
+.checklist-panel {
+    width: 380px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist-panel h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--light-gray);
+    padding-bottom: 0.5rem;
+}
+
+.checks-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--light-gray);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.check-item:hover {
+    border-color: var(--pemex-green);
+    background: #f0fdf4;
+}
+
+.check-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.check-item span {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Botón de Acción */
+.btn-next {
+    background: var(--pemex-green);
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+.btn-next:hover {
+    background: #005a2a;
+    box-shadow: 0 4px 12px rgba(0, 115, 54, 0.3);
+}
+
+/* Barra de Estado de Etiqueta */
+.status-bar {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.tag-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748b;
+}
+
+.tag-icon {
+    height: 45px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#tag-text {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--pemex-red);
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 1024px) {
+    .app-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .checklist-panel {
+        width: 100%;
+    }
+}
