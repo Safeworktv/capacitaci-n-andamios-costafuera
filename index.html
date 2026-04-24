@@ -3,41 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacitación SSPA: Montaje en Plataforma</title>
+    <title>Capacitación SSPA: Montaje Seguro de Andamios</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="main-header">
-        <img src="assets/logo_pemex.png" alt="PEMEX" class="logo-inst">
-        <div class="brand">
-            <h1>ENTRENAMIENTO TÉCNICO DE ANDAMIAJE</h1>
-            <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
+    <header class="training-header">
+        <div class="header-left">
+            <img src="assets/logo_pemex.png" alt="PEMEX" class="logo-inst">
+            <div class="divider"></div>
+            <div class="brand">
+                <h1>SISTEMA DE ENTRENAMIENTO DE ANDAMIAJE</h1>
+                <p>Cumplimiento Normativo SSPA / Ambiente Marino</p>
+            </div>
         </div>
-        <div id="phase-badge" class="badge">FASE 1: INSPECCIÓN</div>
+        <div class="phase-indicator">
+            FASE ACTUAL: <span id="current-phase-name">Cargando...</span>
+        </div>
     </header>
 
-    <main class="app-container">
-        <section class="viewer">
-            <div class="image-card">
-                <img src="assets/paso0_inspeccion.png" id="main-image">
-                <div class="instruction-box">
-                    <h2 id="step-title">Inspección de Componentes</h2>
-                    <p id="step-desc">Cargando instrucciones...</p>
+    <main class="training-layout">
+        <section class="visual-engine">
+            <div class="viewport-card">
+                <div class="image-frame">
+                    <img src="" id="guide-image" alt="Visualización Técnica">
                 </div>
-            </div>
-            <div class="status-bar">
-                <span class="tag-label">ETIQUETA ACTUAL:</span>
-                <img src="assets/etiqueta_roja.jpg" id="current-tag" class="tag-icon">
-                <span id="tag-text">NO SEGURO PARA USO</span>
+                <div class="instruction-overlay">
+                    <h3 id="step-title">Cargando...</h3>
+                    <p id="step-desc">Espere un momento.</p>
+                </div>
             </div>
         </section>
 
-        <aside class="checklist-panel">
-            <h3>PUNTOS DE VERIFICACIÓN</h3>
-            <div id="check-list" class="checks-container">
+        <aside class="control-panel">
+            <div class="panel-section" id="compliance-section">
+                <h3>PROTOCOLO DE SEGURIDAD</h3>
+                <div id="checklist-container" class="checklist-v3">
+                    </div>
+                <button class="btn-next" id="btn-validate" onclick="nextStep()">VALIDAR Y CONTINUAR</button>
+            </div>
+
+            <div class="panel-section" id="evaluation-section" style="display: none;">
+                <h3>EVALUACIÓN DE CERTIFICACIÓN</h3>
+                <div class="quiz-container">
+                    <p class="quiz-question" id="quiz-question-text">Pregunta</p>
+                    <div class="quiz-options" id="quiz-options-container">
+                        </div>
                 </div>
-            <button class="btn-next" onclick="validarPaso()">Confirmar y Siguiente Paso</button>
+            </div>
+
+            <div class="panel-section tag-control">
+                <h3>ESTADO DE TARJETA</h3>
+                <div id="tag-display" class="tag-status status-roja">
+                    <img src="assets/etiqueta_roja.jpg" alt="Tarjeta Roja" id="active-tag">
+                    <p id="tag-note">ESTADO: NO SEGURO PARA USO</p>
+                </div>
+            </div>
         </aside>
     </main>
 
