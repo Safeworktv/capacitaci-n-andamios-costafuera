@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacitación SSPA: Montaje Seguro de Andamios</title>
+    <title>Capacitación SSPA - Andamios</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="training-header">
@@ -14,11 +14,11 @@
             <div class="divider"></div>
             <div class="brand">
                 <h1>SISTEMA DE ENTRENAMIENTO DE ANDAMIAJE</h1>
-                <p>Cumplimiento Normativo SSPA / Ambiente Marino</p>
+                <p>Cumplimiento Normativo SSPA</p>
             </div>
         </div>
         <div class="phase-indicator">
-            FASE ACTUAL: <span id="current-phase-name">Cargando...</span>
+            FASE: <span id="current-phase-name">Cargando...</span>
         </div>
     </header>
 
@@ -26,7 +26,7 @@
         <section class="visual-engine">
             <div class="viewport-card">
                 <div class="image-frame">
-                    <img src="" id="guide-image" alt="Visualización Técnica">
+                    <img src="" id="guide-image" alt="Visualización">
                 </div>
                 <div class="instruction-overlay">
                     <h3 id="step-title">Cargando...</h3>
@@ -36,32 +36,29 @@
         </section>
 
         <aside class="control-panel">
-            <div class="panel-section" id="compliance-section">
+            <div id="compliance-section" class="panel-section">
                 <h3>PROTOCOLO DE SEGURIDAD</h3>
-                <div id="checklist-container" class="checklist-v3">
-                    </div>
-                <button class="btn-next" id="btn-validate" onclick="nextStep()">VALIDAR Y CONTINUAR</button>
+                <div id="checklist-container" class="checklist-v3"></div>
+                <button class="btn-next" onclick="nextStep()">VALIDAR Y CONTINUAR</button>
             </div>
 
-            <div class="panel-section" id="evaluation-section" style="display: none;">
-                <h3>EVALUACIÓN DE CERTIFICACIÓN</h3>
-                <div class="quiz-container">
-                    <p class="quiz-question" id="quiz-question-text">Pregunta</p>
-                    <div class="quiz-options" id="quiz-options-container">
-                        </div>
+            <div id="evaluation-section" class="panel-section" style="display: none;">
+                <h3>EVALUACIÓN TÉCNICA</h3>
+                <div id="quiz-container">
+                    <p id="quiz-question-text" class="quiz-question"></p>
+                    <div id="quiz-options-container" class="quiz-options"></div>
                 </div>
             </div>
 
             <div class="panel-section tag-control">
                 <h3>ESTADO DE TARJETA</h3>
                 <div id="tag-display" class="tag-status status-roja">
-                    <img src="assets/etiqueta_roja.jpg" alt="Tarjeta Roja" id="active-tag">
-                    <p id="tag-note">ESTADO: NO SEGURO PARA USO</p>
+                    <img src="assets/etiqueta_roja.jpg" alt="Tarjeta" id="active-tag">
+                    <p id="tag-note">NO SEGURO PARA USO</p>
                 </div>
             </div>
         </aside>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
