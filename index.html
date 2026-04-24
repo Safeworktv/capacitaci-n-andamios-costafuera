@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA DE ENTRENAMIENTO SSPA | PEMEX</title>
+    <title>Entrenamiento de Armado de Andamios | PEMEX</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -15,7 +15,7 @@
             <img src="assets/logo_pemex.png" alt="PEMEX" class="institutional-logo">
             <div class="v-divider"></div>
             <div class="brand-info">
-                <h1>ESTACIÓN DE ENTRENAMIENTO VIRTUAL</h1>
+                <h1>ESTACIÓN DE ENTRENAMIENTO DE ARMADO DE ANDAMIOS</h1>
                 <p>Gerencia de Seguridad, Salud en el Trabajo y Protección Ambiental</p>
             </div>
         </div>
@@ -48,59 +48,29 @@
                 </div>
             </div>
             <div class="instruction-box">
-                <p id="guide-text">INICIE ARRASTRANDO EL HUSILLO AL ÁREA DE MONTAJE.</p>
+                <p id="guide-text">PASO 1: ARRASTRE EL HUSILLO AL ÁREA DE MONTAJE PARA ESTABLECER LA BASE.</p>
             </div>
         </aside>
 
-        <section class="build-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <section class="build-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
             <div class="grid-layer"></div>
             <div id="scaffold-container">
                 <div id="ground-line"></div>
             </div>
-            <div class="card-display" id="card-holder">
-                </div>
+            <div class="card-display" id="card-holder"></div>
             <div class="terminal-log">
-                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA INICIALIZADO. ESPERANDO MANIOBRA...</span>
+                <span class="terminal-prompt">></span> <span id="log-text">SISTEMA INICIALIZADO. ESPERANDO PASO 1...</span>
             </div>
         </section>
     </main>
 
     <footer class="data-footer">
         <div class="input-container">
-            <div class="field">
-                <label>UBICACIÓN</label>
-                <input type="text" id="loc-input" placeholder="Especifique instalación">
-            </div>
-            <div class="field">
-                <label>PERMISO</label>
-                <input type="text" id="permit-input" placeholder="Folio de trabajo">
-            </div>
+            <div class="field"><label>UBICACIÓN</label><input type="text" id="loc-input" placeholder="Instalación"></div>
+            <div class="field"><label>PERMISO</label><input type="text" id="permit-input" placeholder="Folio"></div>
         </div>
         <button id="btn-inspect" class="action-btn" onclick="openProtocol()" disabled>INICIAR PROTOCOLO TÉCNICO</button>
     </footer>
-
-    <div id="modal-protocol" class="modal-overlay">
-        <div class="glass-modal">
-            <div class="modal-header">
-                <h3>CERTIFICACIÓN DE SEGURIDAD</h3>
-                <button onclick="closeProtocol()" class="close-x">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="checklist-v3">
-                    <label class="check-row"><input type="checkbox" id="chk1"> <span>Nivelación y Plomeo (Bases y Husillos)</span></label>
-                    <label class="check-row"><input type="checkbox" id="chk2"> <span>Aseguramiento de Diagonales/Crucetas</span></label>
-                    <label class="check-row"><input type="checkbox" id="chk3"> <span>Cierre de Seguros en Charolas</span></label>
-                    <label class="check-row"><input type="checkbox" id="chk4"> <span>Barreras y Rodapiés Perimetrales</span></label>
-                    <label class="check-row"><input type="checkbox" id="chk5"> <span>Distancia de Seguridad a Equipos</span></label>
-                </div>
-                <div class="sign-area">
-                    <label>FIRMA DEL SUPERVISOR</label>
-                    <input type="text" id="signer" placeholder="Escriba nombre completo">
-                </div>
-                <button class="authorize-btn" onclick="completeProcess()">EMITIR TARJETA VERDE</button>
-            </div>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
