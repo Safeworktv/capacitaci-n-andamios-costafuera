@@ -1,233 +1,72 @@
-/* =========================================
-   SIMULADOR DE CAPACITACIÓN SSPA - ANDAMIOS
-   Entorno: Plataformas Marinas
-   ========================================= */
-
 :root {
     --pemex-green: #007336;
     --pemex-red: #ee2d24;
-    --dark-navy: #0f172a;
-    --light-gray: #f8fafc;
-    --border-color: #e2e8f0;
+    --navy-bg: #0f172a;
+    --panel-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-light: #e2e8f0;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; color: var(--text-main); line-height: 1.5; }
+
+.training-header {
+    background: var(--panel-bg); padding: 15px 40px; display: flex; justify-content: space-between;
+    align-items: center; border-bottom: 5px solid var(--pemex-green); box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f1f5f9;
-    color: var(--dark-navy);
-    line-height: 1.5;
-}
+.header-left { display: flex; align-items: center; }
+.logo-inst { height: 75px; }
+.divider { width: 1px; height: 40px; background: #ddd; margin: 0 20px; }
+.brand h1 { font-size: 1.1rem; margin: 0; letter-spacing: 1px; font-weight: 700; }
+.brand p { margin: 0; font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
-/* Encabezado Profesional */
-.main-header {
-    background: #ffffff;
-    padding: 1rem 2.5rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 5px solid var(--pemex-green);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+.phase-indicator { background: var(--navy-bg); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; }
 
-.logo-inst {
-    height: 65px;
-    margin-right: 20px;
-}
+.training-layout { display: flex; height: calc(100vh - 110px); padding: 25px; gap: 25px; }
 
-.brand h1 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
+/* Visual Engine: Elegancia y Foco */
+.visual-engine { flex: 2; display: flex; flex-direction: column; }
+.viewport-card { background: black; border-radius: 20px; flex-grow: 1; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.image-frame { height: 100%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #222 0%, #000 100%); }
+.image-frame img { max-height: 90%; max-width: 90%; object-fit: contain; transition: opacity 0.5s; }
 
-.brand p {
-    font-size: 0.75rem;
-    color: #64748b;
-    font-weight: 600;
-    text-transform: uppercase;
+.instruction-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 30px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.95)); color: white; backdrop-filter: blur(5px);
 }
+.instruction-overlay h3 { margin: 0 0 8px; font-size: 1.3rem; color: #4ade80; font-weight: 700; }
+.instruction-overlay p { margin: 0; font-size: 0.95rem; opacity: 0.9; }
 
-.badge {
-    margin-left: auto;
-    background: var(--dark-navy);
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
+/* Panel de Control Lateral */
+.control-panel { width: 380px; background: var(--panel-bg); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; gap: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-/* Contenedor Principal */
-.app-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    height: calc(100vh - 100px);
-}
+.panel-section h3 { font-size: 0.9rem; margin: 0 0 15px; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-bottom: 2px solid var(--border-light); padding-bottom: 8px; }
 
-/* Área del Visualizador de Imágenes */
-.viewer {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+/* Checklist Elegante */
+.check-row { display: flex; gap: 15px; padding: 15px; background: #f8fafc; border-radius: 12px; margin-bottom: 12px; cursor: pointer; border: 1px solid var(--border-light); transition: all 0.2s; }
+.check-row:hover { border-color: var(--pemex-green); background: #f0fdf4; }
+.check-row input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; }
+.check-row span { font-size: 0.85rem; font-weight: 500; color: var(--text-main); }
 
-.image-card {
-    background: #000000;
-    border-radius: 12px;
-    flex-grow: 1;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border-color);
-}
+/* Sección de Evaluación e Opciones Multiples */
+.quiz-question { font-size: 1rem; font-weight: 700; margin-bottom: 20px; color: var(--text-main); }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-btn { background: #f1f5f9; border: 1px solid var(--border-light); padding: 15px; border-radius: 10px; text-align: left; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-btn:hover { background: #e2e8f0; border-color: #cbd5e1; }
+.quiz-btn.correct { background: var(--pemex-green); color: white; border-color: var(--pemex-green); }
+.quiz-btn.incorrect { background: var(--pemex-red); color: white; border-color: var(--pemex-red); }
 
-.image-card img {
-    max-height: 90%;
-    max-width: 95%;
-    object-fit: contain;
-}
-
-.instruction-box {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    color: #ffffff;
-    padding: 1.5rem;
-}
-
-.instruction-box h2 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    color: #4ade80; /* Verde neón para resaltar el título */
-}
-
-.instruction-box p {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-/* Panel de Check-list Lateral */
-.checklist-panel {
-    width: 380px;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-.checklist-panel h3 {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--light-gray);
-    padding-bottom: 0.5rem;
-}
-
-.checks-container {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.check-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: var(--light-gray);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.check-item:hover {
-    border-color: var(--pemex-green);
-    background: #f0fdf4;
-}
-
-.check-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-top: 2px;
-    cursor: pointer;
-}
-
-.check-item span {
-    font-size: 0.85rem;
-    font-weight: 500;
-}
+/* Panel de Estado de Tarjeta */
+.tag-control { margin-top: auto; }
+.tag-status { text-align: center; background: #fef2f2; padding: 20px; border-radius: 15px; border: 1px solid #fee2e2; transition: all 0.3s; }
+.tag-status.status-verde { background: #f0fdf4; border-color: #dcfce7; }
+#active-tag { width: 90px; margin-bottom: 12px; border-radius: 5px; }
+#tag-note { margin: 0; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+.status-roja #tag-note { color: var(--pemex-red); }
+.status-verde #tag-note { color: var(--pemex-green); }
 
 /* Botón de Acción */
-.btn-next {
-    background: var(--pemex-green);
-    color: #ffffff;
-    border: none;
-    width: 100%;
-    padding: 1.2rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 15px;
-    text-transform: uppercase;
-}
-
-.btn-next:hover {
-    background: #005a2a;
-    box-shadow: 0 4px 12px rgba(0, 115, 54, 0.3);
-}
-
-/* Barra de Estado de Etiqueta */
-.status-bar {
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid var(--border-color);
-}
-
-.tag-label {
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #64748b;
-}
-
-.tag-icon {
-    height: 45px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#tag-text {
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: var(--pemex-red);
-}
-
-/* Responsividad para pantallas pequeñas */
-@media (max-width: 1024px) {
-    .app-container {
-        flex-direction: column;
-        height: auto;
-    }
-    .checklist-panel {
-        width: 100%;
-    }
-}
+.btn-next { background: var(--pemex-green); color: white; border: none; padding: 18px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.9rem; transition: background 0.2s, transform 0.1s; text-transform: uppercase; width: 100%; }
+.btn-next:hover { background: #005a2a; }
+.btn-next:active { transform: scale(0.98); }
